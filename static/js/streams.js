@@ -1,25 +1,34 @@
 const APP_ID = '4cb5e0cc1c35489e895e0e6aa53fb65b';
-const CHANNEL = 'main';
-const TOKEN = '0064cb5e0cc1c35489e895e0e6aa53fb65bIADUUI6vAx+yFKWMjkCgCHdm0TBAJA1jzWyRwBHXiT8zBWTNKL8AAAAAEAAz+rZWsmCwYgEAAQCxYLBi';
-let UID;
-
-const client = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' })
+const CHANNEL = sessionStorage.getItem('room');
+const TOKEN = sessionStorage.getItem('token');
+let UID = Number(sessionStorage.getItem('UID'));
+let NAME = sessionStorage.getItem('name')
+const client = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
 
 let localTracks = [];
 let remoteUsers = {};
 
 const joinAndDisplayLocalStream = async () => {
+    document.getElementById('room-name').innerText = CHANNEL
 
     client.on('user-published', handleUserJoined)
     client.on('user-left', handleUserLeft)
 
-    UID = await client.join(APP_ID, CHANNEL, TOKEN, null);
+    try {
+        await client.join(APP_ID, CHANNEL, TOKEN, UID);
+    } catch (error) {
+        console.error(error)
+        window.open('/', '_self')
+    }
+
     localTracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+
+    let member = createMember()
 
     let player = `
                 <div class="video-container" id="user-container-${UID}">
                     <div class="username-wrapper">
-                        <span class="user-name">My name: </span>
+                        <span class="user-name">${member.name}</span>
                     </div>
                     <div class="video-player" id="user-${UID}"></div>
                 </div>`
@@ -91,6 +100,18 @@ const toggleMic = async (e) => {
         await localTracks[0].setMuted(true)
         e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
     }
+}
+
+const createMember = async () => {
+    let response = await fetch('/create_member/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 'name': NAME, 'room_name': CHANNEL, 'UID': UID })
+    })
+    let member = await response.json()
+    return
 }
 
 joinAndDisplayLocalStream();

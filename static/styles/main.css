@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
@@ -5,13 +7,15 @@
 .material-icons.md-96 { font-size: 96px; }
 
 :root{
-    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
+    --shadow: 0 4px 6px 6px rgba(18, 79, 94, 0.582),0 2px 4px -1px rgba(0,0,0,0.06);
 }
 
 body{
     background-color: rgba(232,233,239,1);
     font-family: 'Montserrat', sans-serif;
 }
+
+/* ------ Lobby styling ------ */
 
 #logo{
     width: auto;
@@ -33,7 +37,7 @@ body{
 #form-container{
     width: 450px;
     box-shadow: var(--shadow);
-    background-color:aliceblue;
+    background-color:rgb(137, 187, 231);
     padding: 30px;
     border-radius: 5px;
     position: fixed;
@@ -42,8 +46,83 @@ body{
     transform: translate(-50%, -50%);
 }
 
+#welcome-message{
+    text-align: center;
+    margin: 20px;
+}
+#welcome-message h1{
+    font-size: 36px;
+}
+#welcome-message p{
+    font-size: 16px;
+}
+
+.form-field{
+    margin:20px;
+}
+
+.form-field label{
+    font-size: 16px;
+    line-height: 1.7rem;
+}
+
+.form-field input{
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    border: 3px solid rgb(80, 130, 196);
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    outline: none;
+    text-align: center;
+}
+
+input[type=text]{
+    -webkit-transition: 0.5s;
+    transition: .5s ease-in-out;
+}
+
+input[type='text']:focus{
+    border:3px solid rgb(2, 58, 131);
+}
+
+.input-field::-webkit-input-placeholder{
+    color: rgb(184, 184, 184);
+    font-size: 12px;
+}
+
+.input-field{
+    font-size: 14px;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+.form-field input[type='submit']{
+    background: #111;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+@media screen and (max-width:450px) {
+    #form-container{
+        width: 95%;
+    }
+
+    #welcome-message{
+        font-size: 24px;
+    }
+}
 
 /* ------ Room styling ------ */
+
+#room-name-wrapper{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
 
 #video-streams{
     display: flex;
@@ -62,6 +141,7 @@ body{
     border-radius: 5px;
     margin: 2px;
     background-color: rgba(198, 202, 219, 1);
+    position: relative;
 }
 
 .video-player{
@@ -69,6 +149,29 @@ body{
     width: 100%;
 }
 
+.video-player > *{
+    border-radius: 5px;
+}
+
+
+.username-wrapper{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, .3);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+}
+
+@media screen and (max-width:1650px) {
+    .video-container{
+        flex-basis: 300px;
+        min-height: 200px;
+    }
+}
 
 /* ---------- Room Styling | Controls ---------- */
 
@@ -92,4 +195,65 @@ body{
 
 #leave-btn{
     background-color: rgb(255, 80, 80, 1);
+}
+
+
+/* ----- Submit btn animation ----- */
+
+.glow-on-hover {
+    background: #111;
+    border: none;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
 }
