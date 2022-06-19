@@ -41,3 +41,55 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+
+/* ------ Room styling ------ */
+
+#video-streams{
+    display: flex;
+    flex-wrap: wrap;
+    height: 85vh;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.video-container{
+    flex-basis: 500px;
+    flex-grow: 1;
+    max-height: 100%;
+    min-height: 350px;
+    border: 1px solid rgb(75, 95, 172);
+    border-radius: 5px;
+    margin: 2px;
+    background-color: rgba(198, 202, 219, 1);
+}
+
+.video-player{
+    height: 100%;
+    width: 100%;
+}
+
+
+/* ---------- Room Styling | Controls ---------- */
+
+#controls-wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    column-gap: 1em;
+    position: fixed;
+    bottom: 20px;
+}
+
+.control-icon{
+    font-weight: 600 !important;
+    box-shadow: var(--shadow);
+    background-color: #fff;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#leave-btn{
+    background-color: rgb(255, 80, 80, 1);
+}
